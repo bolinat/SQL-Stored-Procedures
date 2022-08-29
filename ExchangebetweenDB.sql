@@ -1,6 +1,10 @@
 /* Exchanging info between DB's : 
-   1. All the LPR_GEN_XX stored procedures must be installed 
-   2. A sceondary DB must be restored and be empty from movements\organizations\departments\registeredmembers\cars
+Dependencies: 
+
+   1. LoadingSubs solution must be installed on target DB
+   2. view v_RegisteredMembers must be installed on the old DB
+  
+  Change the DB names to the needed ones accordingly (IPI_LPR_DB represents the old (source) DB , IPI_LPR_DB2 represents the new (Target) DB)
    */
 
 
@@ -279,6 +283,7 @@ set @departmentId=(select departmentid from @Load where id=@id)
 set @siteId=(select siteid from @Load where id=@id)
 
 
+exec IPI_LPR_DB2.dbo.usp_lpr_LoadSubs_LoadingSubs @siteId , @organizationId,@departmentId,@mode=null
 
 
 
